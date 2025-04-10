@@ -10,6 +10,10 @@ function example_structure(exampleid){
 			<button class="buttonsample copyturtletoclipboard" id="` + exampleid + `-tabs-1-button-1">Copy</button>
 			<button class="buttonsample openTurtleInConverter" id="` + exampleid + `-tabs-1-button-2">Open in Converter</button>
 	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
+			<select name="version" id="version">
+				<option>v3.Base0</option>
+				<option selected="selected">v3.Full</option>
+    		</select>
 		</div>
 		<div id="` + exampleid + `-tabs-2">
 			<textarea class="validationquery" id="` + exampleid + `-tab2validationquery" name="query" cols="80" rows="16"></textarea>
@@ -17,7 +21,10 @@ function example_structure(exampleid){
 			<button class="buttonsample openinplayground" id="` + exampleid + `-tabs-2-button-2">Open in Playground</button>
 			<button class="buttonsample openJsonldInConverter" id="` + exampleid + `-tabs-2-button-3">Open in Converter</button>
 	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
-
+			<select name="version" id="version">
+				<option>v3.Base0</option>
+				<option selected="selected">v3.Full</option>
+    		</select>
 		</div>
 	</div>`;
 	return structure;
@@ -101,6 +108,16 @@ var dialog = $("<div>", {
 	show: { effect: "blind", duration: 400 }
   });
 
+//curl -X 'POST' \
+//'https://www.itb.ec.europa.eu/shacl/dcat-ap/api/validate' \
+//-H 'accept: application/ld+json' \
+//-H 'Content-Type: application/json' \
+//-d '{
+//"contentToValidate": "{\n   \"@context\": [\n   \"https://semiceu.github.io/uri.semic.eu-generated/Core-Person-Vocabulary/releases/2.1.1/context/core-person-ap.jsonld\",\n   {\n     \"adms\": \"http://www.w3.org/ns/adms#\",\n     \"cv\": \"http://data.europa.eu/m8g/\",\n     \"ex\": \"http://example.com/\",\n     \"foaf\": \"http://xmlns.com/foaf/0.1/\",\n     \"locn\": \"http://www.w3.org/ns/locn#\",\n     \"person\": \"http://www.w3.org/ns/person#\",\n     \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\",\n     \"skos\": \"http://www.w3.org/2004/02/skos/core#\",\n     \"xsd\": \"http://www.w3.org/2001/XMLSchema#\"\n   }],\n   \"@graph\": [\n     {\n      \"@id\": \"ex:person\",\n      \"@type\": \"Person\",\n      \"person:birthName\" : {\n        \"@language\": \"fr\",\n        \"@value\": \"René François Ghislain Magritte\"\n      },\n       \"cv:birthDate\" : {\n        \"@type\": \"xsd:date\",\n        \"@value\": \"1898-11-21\"\n      },\n      \"cv:deathDate\" : {\n        \"@type\": \"xsd:date\",\n        \"@value\": \"1967-08-15\"\n      },\n      \"cv:domicile\" : {\n        \"@id\": \"ex:address\"\n      },\n      \"foaf:familyName\" : {\n        \"@language\": \"fr\",\n        \"@value\": \"Magritte\"     \n      },\n      \"foaf:name\" : {\n        \"@language\": \"fr\",\n        \"@value\": \"René François Ghislain Magritte\"\n      },\n      \"foaf:givenName\" : {\n        \"@language\": \"fr\",\n        \"@value\": \"René François Ghislain\"\n      },\n      \"person:placeOfBirth\" : {\n        \"@id\": \"ex:location1\"\n      },\n      \"person:placeOfDeath\" : {\n        \"@id\": \"ex:location2\"\n      },\n      \"cv:sex\" : {\n        \"@id\" : \"http://publications.europa.eu/resource/authority/human-sex/MALE\"\n      }\n    },\n    {\n       \"@id\": \"ex:address\",\n       \"@type\": \"Address\",\n       \"locn:adminUnitL1\": {\n         \"@language\": \"fr\",\n         \"@value\": \"Belgique\"\n       },\n       \"locn:adminUnitL2\": {\n         \"@language\": \"fr\",\n         \"@value\": \"Région de Bruxelles-Capitale\"\n       },\n       \"locn:fullAddress\": {\n         \"@language\": \"fr\",\n         \"@value\": \"Rue Esseghem 135, 1090 Bruxelles, Belgique\"\n       },\n       \"locn:locatorDesignator\": \"135\",\n       \"locn:postCode\": \"1090\",\n       \"locn:postName\": {\n         \"@language\": \"fr\",\n         \"@value\": \"Bruxelles\"\n       },\n       \"locn:thoroughfare\": {\n         \"@language\": \"fr\",\n         \"@value\": \"Rue Esseghem\"\n       }\n     },\n     {\n       \"@id\": \"ex:location1\",\n       \"@type\": \"Location\",\n       \"rdfs:seeAlso\" : {\n        \"@type\": \"xsd:anyURI\",\n        \"@value\": \"https://www.geonames.org/2792567\"\n       },\n       \"locn:geographicName\" : {\n         \"@language\": \"fr\",\n         \"@value\": \"Lessines\"\n       }\n     },\n     {\n       \"@id\": \"ex:location2\",\n       \"@type\": \"Location\",\n       \"rdfs:seeAlso\" : {\n        \"@type\": \"xsd:anyURI\",\n        \"@value\": \"https://www.geonames.org/2800866\"\n       },\n       \"locn:geographicName\" : {\n         \"@language\": \"fr\",\n         \"@value\": \"Bruxelles\"\n       }\n     }\n  ]\n }\n    \n ",
+//"contentSyntax": "application/ld+json",
+//"validationType": "v3.Full"
+//}'
+
 function validate(model, version, content, format) {
 	request = {
 	"contentToValidate": btoa(content),
@@ -119,6 +136,11 @@ function validate(model, version, content, format) {
 		dataType: "text",
 		success: function (response, status, jqXHR) {
 			dialog.css("white-space","pre-wrap");
+			nquads = jsonld.toRDF(response, {format: 'application/n-quads'});
+			htmltable="<table><th><td>Subject</td><td>Predicate</td><td>Object</td></th>";
+			for (const element of nquads) {
+				console.log(element);
+			  }
 			dialog.text(response);
 		    dialog.dialog("open");
 			reg = /sh:conforms\s+true/g
