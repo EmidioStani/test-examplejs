@@ -30,7 +30,7 @@ function example_structure(exampleid){
 	return structure;
 }
 
-
+//v1.2, v2.0, vTest, vCodelists, v2.0Base, v2.0Rec, v2.0Range, v2.0Base0, v2.0Full, v2.0Range0, v3.Codelists, v3.0Base0, v3.0Range0, v3.0Base, v3.0Range, v3.0Rec, v3.Full, v3.Full1, hvd.0base, hvd.0Range, hvd.UsageNotes, hvd.Full
 /**
  * auxiliary function to get around the issue that indexOf() is not working with jquery.
  */
@@ -304,7 +304,7 @@ $(document).ready(function () {
 		var exampleid = $(this).parent().parent().attr("exampleid");
 		var indexValues = $examples.map(function() { return this.id; }) ;
 		var index = myIndexOf(indexValues, exampleid);
-		var shapes = validate("dcat-ap", "v3.0Full", editors[index].CM0.getValue(), "text/turtle");
+		var shapes = validate("dcat-ap", "v3.Full", editors[index].CM0.getValue(), "text/turtle");
 		return false;
 	});
 	$("button.validateJsonld").on('click', function(e) {
@@ -313,7 +313,7 @@ $(document).ready(function () {
 		var index = myIndexOf(indexValues, exampleid);
 		var shaclfilepath = "./html/shacl/shapes.ttl" ;
 		//var shapes = loadShape(shaclfilepath, editors[index].CM1.getValue(), "application%2Fld%2Bjson");
-		var shapes = validate("dcat-ap", "v3.0Full", editors[index].CM1.getValue(), "application/ld+json");
+		var shapes = validate("dcat-ap", "v3.Full", editors[index].CM1.getValue(), "application/ld+json");
 		return false;
 	});
 	$("div.CodeMirror pre").on('click', function(e) {
