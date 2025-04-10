@@ -179,7 +179,7 @@ function validate(model, version, content, format) {
 				});
 
 				htmltable += "</table>"
-				dialog.text(htmltable);
+				dialog.html(htmltable);
 				dialog.dialog("open");
 				reg = /sh:conforms\s+true/g
 				if(response.search(reg) >=0 )
