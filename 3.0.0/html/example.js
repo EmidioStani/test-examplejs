@@ -304,7 +304,7 @@ $(document).ready(function () {
 		var exampleid = $(this).parent().parent().attr("exampleid");
 		var indexValues = $examples.map(function() { return this.id; }) ;
 		var index = myIndexOf(indexValues, exampleid);
-		var shapes = validate("dcat-ap", "v3.0Base0", editors[index].CM0.getValue(), "text/turtle");
+		var shapes = validate("dcat-ap", "v3.0Full", editors[index].CM0.getValue(), "text/turtle");
 		return false;
 	});
 	$("button.validateJsonld").on('click', function(e) {
@@ -313,7 +313,7 @@ $(document).ready(function () {
 		var index = myIndexOf(indexValues, exampleid);
 		var shaclfilepath = "./html/shacl/shapes.ttl" ;
 		//var shapes = loadShape(shaclfilepath, editors[index].CM1.getValue(), "application%2Fld%2Bjson");
-		var shapes = validate("dcat-ap", "v3.0Base0", editors[index].CM1.getValue(), "application/ld+json");
+		var shapes = validate("dcat-ap", "v3.0Full", editors[index].CM1.getValue(), "application/ld+json");
 		return false;
 	});
 	$("div.CodeMirror pre").on('click', function(e) {
