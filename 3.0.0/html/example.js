@@ -137,29 +137,26 @@ function validate(model, version, content, format) {
 		success: function (response, status, jqXHR) {
 			dialog.css("white-space","pre-wrap");
 			htmltable="<table><th><td>Subject</td><td>Predicate</td><td>Object</td></th>";
-			jsonld.toRDF(response, { format: 'application/n-quads' }).then(nquads => {
-				const parser = new N3.Parser({ format: 'N-Quads' });
-				
-				parser.parse(nquads, (error, quad, prefixes) => {
-				  if (error) {
-					console.error("Parsing error:", error);
-				  } else if (quad) {
-					// Extract subject, predicate, object
-					const subject = quad.subject.value;
-					const predicate = quad.predicate.value;
-					const object = quad.object.termType === 'Literal' 
-					  ? `"${quad.object.value}"^^${quad.object.datatype.value}`
-					  : quad.object.value;
-		  
-					console.log("Triple:");
-					console.log("Subject:", subject);
-					console.log("Predicate:", predicate);
-					console.log("Object:", object);
-				  } else {
-					console.log("Done parsing all quads.");
-				  }
-				});
-			  });
+			const parser = new N3.Parser({ format: 'text/turtle' });
+			const triples = [];
+		
+			parser.parse(response, (error, quad, prefixes) => {
+			  if (error) {
+				console.error("Error:", error);
+			  } else if (quad) {
+				// You get subject, predicate, object here
+				console.log("Triple:");
+				console.log("  Subject:", quad.subject.value);
+				console.log("  Predicate:", quad.predicate.value);
+				console.log("  Object:", quad.object.termType === 'Literal' 
+				  ? `"${quad.object.value}"^^${quad.object.datatype.value}` 
+				  : quad.object.value);
+		
+				triples.push(quad);
+			  } else {
+				console.log("Parsing complete. Found", triples.length, "triples.");
+			  }
+			});
 			dialog.text(response);
 		    dialog.dialog("open");
 			reg = /sh:conforms\s+true/g
