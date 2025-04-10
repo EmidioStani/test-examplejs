@@ -159,7 +159,7 @@ function validate(model, version, content, format) {
 					?result sh:focusNode ?node .
 					?result sh:resultPath ?path .
 					?result sh:resultMessage ?message .
-					?result sg:resultSeverity ?severity .
+					?result sh:resultSeverity ?severity .
 				}
 				`;
 
