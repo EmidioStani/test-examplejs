@@ -155,7 +155,7 @@ function validate(model, version, content, format) {
 				PREFIX sh: <http://www.w3.org/ns/shacl#>
 				SELECT ?result ?p ?o
 				WHERE {
-					?result a sh:ValidationResult ;
+					?result a sh:ValidationResult .
 					?result ?p ?o .
 				}
 				`;
