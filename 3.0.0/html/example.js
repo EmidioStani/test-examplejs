@@ -137,26 +137,43 @@ function validate(model, version, content, format) {
 		success: function (response, status, jqXHR) {
 			dialog.css("white-space","pre-wrap");
 			htmltable="<table><th><td>Subject</td><td>Predicate</td><td>Object</td></th>";
-			const parser = new N3.Parser({ format: 'text/turtle' });
-			const triples = [];
-		
-			parser.parse(response, (error, quad, prefixes) => {
-			  if (error) {
-				console.error("Error:", error);
-			  } else if (quad) {
-				// You get subject, predicate, object here
-				console.log("Triple:");
-				console.log("  Subject:", quad.subject.value);
-				console.log("  Predicate:", quad.predicate.value);
-				console.log("  Object:", quad.object.termType === 'Literal' 
-				  ? `"${quad.object.value}"^^${quad.object.datatype.value}` 
-				  : quad.object.value);
-		
-				triples.push(quad);
-			  } else {
-				console.log("Parsing complete. Found", triples.length, "triples.");
-			  }
+
+			const parser = new N3.Parser();
+			const store = new N3.Store();
+
+			// Parse the Turtle into the store
+			parser.parse(turtle, (error, quad, prefixes) => {
+				if (quad) {
+				store.addQuad(quad);
+				} else {
+				runQuery(); // Done parsing
+				}
 			});
+
+			async function runQuery() {
+				const query = `
+				PREFIX sh: <http://www.w3.org/ns/shacl#>
+				SELECT ?result ?p ?o
+				WHERE {
+					?result a sh:ValidationResult ;
+					?result ?p ?o .
+				}
+				`;
+
+				const comunicaEngine = Comunica.QueryEngine();
+				const result = await comunicaEngine.queryBindings(query, {
+				sources: [store] // Using the N3 store as the RDF source
+				});
+
+				const bindings = await result.toArray();
+
+				bindings.forEach(binding => {
+				console.log("Subject:", binding.get('result').value);
+				console.log("Predicate:", binding.get('p').value);
+				console.log("Object:", binding.get('o').value);
+				});
+			}
+
 			dialog.text(response);
 		    dialog.dialog("open");
 			reg = /sh:conforms\s+true/g
