@@ -174,15 +174,17 @@ function validate(model, version, content, format) {
 					console.log("Predicate:", binding.get('p').value);
 					console.log("Object:", binding.get('o').value);
 				});
+
+				htmltable += "</table>"
+				dialog.text(htmltable);
+				dialog.dialog("open");
+				reg = /sh:conforms\s+true/g
+				if(response.search(reg) >=0 )
+					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "darkgreen", "background-image": "linear-gradient(to bottom,#6a996a,#006400)","color":"white"});
+				else
+					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "red", "background-image": "linear-gradient(to bottom,#ac6464,#b31c1c)","color":"white"});
 			}
-			htmltable += "</table>"
-			dialog.text(htmltable);
-		    dialog.dialog("open");
-			reg = /sh:conforms\s+true/g
-			if(response.search(reg) >=0 )
-				dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "darkgreen", "background-image": "linear-gradient(to bottom,#6a996a,#006400)","color":"white"});
-			else
-				dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "red", "background-image": "linear-gradient(to bottom,#ac6464,#b31c1c)","color":"white"});
+			
 		},
 
 		error: function (jqXHR, exception) {
