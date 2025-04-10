@@ -160,7 +160,7 @@ function validate(model, version, content, format) {
 				}
 				`;
 
-				const comunicaEngine = Comunica.QueryEngine();
+				const comunicaEngine = new Comunica.QueryEngine();
 				const result = await comunicaEngine.queryBindings(query, {
 				sources: [store] // Using the N3 store as the RDF source
 				});
