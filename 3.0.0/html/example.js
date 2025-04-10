@@ -168,13 +168,15 @@ function validate(model, version, content, format) {
 				const bindings = await result.toArray();
 
 				bindings.forEach(binding => {
-				console.log("Subject:", binding.get('result').value);
-				console.log("Predicate:", binding.get('p').value);
-				console.log("Object:", binding.get('o').value);
+					triplestring = "<tr><td>" + binding.get('result').value + "</td><td>" + binding.get('p').value + "</td><td>" + binding.get('o').value + "</td></tr>" ;
+					htmltable += triplestring;
+					console.log("Subject:", binding.get('result').value);
+					console.log("Predicate:", binding.get('p').value);
+					console.log("Object:", binding.get('o').value);
 				});
 			}
-
-			dialog.text(response);
+			htmltable += "</table>"
+			dialog.text(htmltable);
 		    dialog.dialog("open");
 			reg = /sh:conforms\s+true/g
 			if(response.search(reg) >=0 )
