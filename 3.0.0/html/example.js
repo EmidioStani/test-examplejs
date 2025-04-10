@@ -137,7 +137,7 @@ function validate(model, version, content, format) {
 		success: function (response, status, jqXHR) {
 			dialog.css("white-space","pre-wrap");
 			htmltable="<table><th><td>Subject</td><td>Predicate</td><td>Object</td></th>";
-			jsonld.toRDF(doc, { format: 'application/n-quads' }).then(nquads => {
+			jsonld.toRDF(response, { format: 'application/n-quads' }).then(nquads => {
 				const parser = new N3.Parser({ format: 'N-Quads' });
 				
 				parser.parse(nquads, (error, quad, prefixes) => {
