@@ -136,11 +136,30 @@ function validate(model, version, content, format) {
 		dataType: "text",
 		success: function (response, status, jqXHR) {
 			dialog.css("white-space","pre-wrap");
-			nquads = jsonld.toRDF(response, {format: 'application/n-quads'});
 			htmltable="<table><th><td>Subject</td><td>Predicate</td><td>Object</td></th>";
-			for (const element of nquads) {
-				console.log(element);
-			  }
+			jsonld.toRDF(doc, { format: 'application/n-quads' }).then(nquads => {
+				const parser = new N3.Parser({ format: 'N-Quads' });
+				
+				parser.parse(nquads, (error, quad, prefixes) => {
+				  if (error) {
+					console.error("Parsing error:", error);
+				  } else if (quad) {
+					// Extract subject, predicate, object
+					const subject = quad.subject.value;
+					const predicate = quad.predicate.value;
+					const object = quad.object.termType === 'Literal' 
+					  ? `"${quad.object.value}"^^${quad.object.datatype.value}`
+					  : quad.object.value;
+		  
+					console.log("Triple:");
+					console.log("Subject:", subject);
+					console.log("Predicate:", predicate);
+					console.log("Object:", object);
+				  } else {
+					console.log("Done parsing all quads.");
+				  }
+				});
+			  });
 			dialog.text(response);
 		    dialog.dialog("open");
 			reg = /sh:conforms\s+true/g
