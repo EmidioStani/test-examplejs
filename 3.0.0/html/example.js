@@ -142,7 +142,7 @@ function validate(model, version, content, format) {
 			const store = new N3.Store();
 
 			// Parse the Turtle into the store
-			parser.parse(turtle, (error, quad, prefixes) => {
+			parser.parse(response, (error, quad, prefixes) => {
 				if (quad) {
 				store.addQuad(quad);
 				} else {
