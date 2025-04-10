@@ -135,8 +135,8 @@ function validate(model, version, content, format) {
 		crossDomain: true,
 		dataType: "text",
 		success: function (response, status, jqXHR) {
-			dialog.css("white-space","pre-wrap");
-			htmltable="<table><th><td>Subject</td><td>Predicate</td><td>Object</td></th>";
+			//dialog.css("white-space","pre-wrap");
+			htmltable="<table><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr>";
 
 			const parser = new N3.Parser();
 			const store = new N3.Store();
@@ -153,10 +153,13 @@ function validate(model, version, content, format) {
 			async function runQuery() {
 				const query = `
 				PREFIX sh: <http://www.w3.org/ns/shacl#>
-				SELECT ?result ?p ?o
+				SELECT ?node ?path ?message ?severity
 				WHERE {
 					?result a sh:ValidationResult .
-					?result ?p ?o .
+					?result sh:focusNode ?node .
+					?result sh:resultPath ?path .
+					?result sh:resultMessage ?message .
+					?result sg:resultSeverity ?severity .
 				}
 				`;
 
@@ -168,11 +171,11 @@ function validate(model, version, content, format) {
 				const bindings = await result.toArray();
 
 				bindings.forEach(binding => {
-					triplestring = "<tr><td>" + binding.get('result').value + "</td><td>" + binding.get('p').value + "</td><td>" + binding.get('o').value + "</td></tr>" ;
+					triplestring = "<tr><td>" + binding.get('node').value + "</td><td>" + binding.get('path').value + "</td><td>" + binding.get('message').value + "</td><td>" + binding.get('severity').value + "</td></tr>" ;
 					htmltable += triplestring;
-					console.log("Subject:", binding.get('result').value);
-					console.log("Predicate:", binding.get('p').value);
-					console.log("Object:", binding.get('o').value);
+					//console.log("Subject:", binding.get('result').value);
+					//console.log("Predicate:", binding.get('p').value);
+					//console.log("Object:", binding.get('o').value);
 				});
 
 				htmltable += "</table>"
