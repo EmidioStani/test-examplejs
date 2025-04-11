@@ -136,7 +136,7 @@ function validate(model, version, content, format) {
 		dataType: "text",
 		success: function (response, status, jqXHR) {
 			//dialog.css("white-space","pre-wrap");
-			htmltable="<table><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr>";
+			htmltable="<table id='ValidationResult'><thead><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr></thead><tbody>";
 
 			const parser = new N3.Parser();
 			const store = new N3.Store();
@@ -178,14 +178,21 @@ function validate(model, version, content, format) {
 					//console.log("Object:", binding.get('o').value);
 				});
 
-				htmltable += "</table>"
-				dialog.html(htmltable);
-				dialog.dialog("open");
+				htmltable += "</tbody></table>"
+
 				reg = /sh:conforms\s+true/g
-				if(response.search(reg) >=0 )
+				if(response.search(reg) >=0 ) {
+					response = "Congratulations, no errors were found"
+					dialog.html(response);
+					dialog.dialog("open");
 					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "darkgreen", "background-image": "linear-gradient(to bottom,#6a996a,#006400)","color":"white"});
-				else
+				} else {
+					dialog.html(htmltable);
+					
+					dialog.dialog("open");
+					$('#ValidationResult').DataTable();
 					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "red", "background-image": "linear-gradient(to bottom,#ac6464,#b31c1c)","color":"white"});
+				}
 			}
 			
 		},
