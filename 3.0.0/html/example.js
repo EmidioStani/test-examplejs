@@ -136,7 +136,7 @@ function validate(model, version, content, format) {
 		dataType: "text",
 		success: function (response, status, jqXHR) {
 			//dialog.css("white-space","pre-wrap");
-			htmltable="<table id='ValidationResult' class='display compact' style='width:100%'><thead><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr></thead><tbody>";
+			htmltable="<table id='ValidationResult' class='display compact' style='width:100%; word-break: break-all;'><thead><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr></thead><tbody>";
 
 			const parser = new N3.Parser();
 			const store = new N3.Store();
