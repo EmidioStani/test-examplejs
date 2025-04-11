@@ -190,7 +190,10 @@ function validate(model, version, content, format) {
 					dialog.html(htmltable);
 					
 					dialog.dialog("open");
-					$('#ValidationResult').DataTable();
+					$('#ValidationResult').DataTable( {
+						searching: false,
+						buttons: ['copy', 'csv', 'excel', 'pdf']
+					});
 					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "red", "background-image": "linear-gradient(to bottom,#ac6464,#b31c1c)","color":"white"});
 				}
 			}
