@@ -192,7 +192,11 @@ function validate(model, version, content, format) {
 					dialog.dialog("open");
 					$('#ValidationResult').DataTable( {
 						searching: false,
-						buttons: ['copy', 'csv', 'excel', 'pdf']
+						layout: {
+							topStart: {
+								buttons: ['copy', 'csv', 'excel']
+							}
+						}
 					});
 					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "red", "background-image": "linear-gradient(to bottom,#ac6464,#b31c1c)","color":"white"});
 				}
