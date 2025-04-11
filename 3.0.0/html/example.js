@@ -204,6 +204,13 @@ function validate(model, version, content, format) {
 									}, 
 									'print']
 							}
+						},
+						"createdRow" : function( row, data, dataIndex) {
+							if(data[3] == "http://www.w3.org/ns/shacl#Violation") {
+								$(row).css("background-color", "#f2dede");
+							} else {
+								$(row).css("background-color", "#fcf8e3");
+							}
 						}
 					});
 					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "red", "background-image": "linear-gradient(to bottom,#ac6464,#b31c1c)","color":"white"});
