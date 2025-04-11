@@ -207,7 +207,7 @@ function validate(model, version, content, format) {
 										text: 'Copy Turtle',
 										action: function (e, dt, node, config) {
 											navigator.clipboard.writeText(response);
-											$(this).tooltip({ items: "#" + this.id, content: "Copied !"});
+											$(this).tooltip({ content: "Copied !"});
 											$(this).tooltip("open");
 										}
 									}
