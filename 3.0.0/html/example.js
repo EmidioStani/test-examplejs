@@ -136,7 +136,7 @@ function validate(model, version, content, format) {
 		dataType: "text",
 		success: function (response, status, jqXHR) {
 			//dialog.css("white-space","pre-wrap");
-			htmltable="<table id='ValidationResult' class='display compact' style='width:100%; word-break: break-all;'><thead><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr></thead><tbody>";
+			htmltable="<table id='ValidationResult' class='display' style='width:100%; word-break: break-all; font-size:14px'><thead><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr></thead><tbody>";
 
 			const parser = new N3.Parser();
 			const store = new N3.Store();
@@ -182,8 +182,8 @@ function validate(model, version, content, format) {
 
 				reg = /sh:conforms\s+true/g
 				if(response.search(reg) >=0 ) {
-					response = "Congratulations, no errors were found"
-					dialog.html(response);
+					responseOk = "Congratulations, no errors were found"
+					dialog.html(responseOk);
 					dialog.dialog("open");
 					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "darkgreen", "background-image": "linear-gradient(to bottom,#6a996a,#006400)","color":"white"});
 				} else {
@@ -202,7 +202,16 @@ function validate(model, version, content, format) {
 										extend: 'pdfHtml5',
 										orientation: 'landscape'
 									}, 
-									'print']
+									'print',
+									{
+										text: 'Copy Turtle',
+										action: function (e, dt, node, config) {
+											navigator.clipboard.writeText(response);
+											$(this).tooltip({ items: "#" + this.id, content: "Copied !"});
+											$(this).tooltip("open");
+										}
+									}
+								]
 							}
 						},
 						"createdRow" : function( row, data, dataIndex) {
