@@ -194,7 +194,15 @@ function validate(model, version, content, format) {
 						searching: false,
 						layout: {
 							topStart: {
-								buttons: ['copy', 'csv', 'excel']
+								buttons: [
+									'copy', 
+									'csv', 
+									'excel',
+									{
+										extend: 'pdfHtml5',
+										orientation: 'landscape'
+									}, 
+									'print']
 							}
 						}
 					});
