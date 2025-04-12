@@ -11,7 +11,7 @@ function example_structure(exampleid){
 			<button class="buttonsample openTurtleInConverter" id="` + exampleid + `-tabs-1-button-2">Open in Converter</button>
 	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
 			<select name="version" id="version" class="buttonsample chooseVersion">
-				<option>v3.Base0</option>
+				<option>v3.0Base</option>
 				<option selected="selected">v3.Full</option>
     		</select>
 		</div>
@@ -22,7 +22,7 @@ function example_structure(exampleid){
 			<button class="buttonsample openJsonldInConverter" id="` + exampleid + `-tabs-2-button-3">Open in Converter</button>
 	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
 			<select name="version" id="version" class="buttonsample chooseVersion">
-				<option>v3.Base0</option>
+				<option>v3.0Base</option>
 				<option selected="selected">v3.Full</option>
     		</select>
 		</div>
@@ -366,7 +366,7 @@ $(document).ready(function () {
 		var exampleid = $(this).parent().parent().attr("exampleid");
 		var indexValues = $examples.map(function() { return this.id; }) ;
 		var index = myIndexOf(indexValues, exampleid);
-		var versionSelected = $(this).siblings('.chooseVersion option:selected').text();
+		var versionSelected = $(this).siblings('.chooseVersion').val();
 		var shapes = validate("dcat-ap", versionSelected, editors[index].CM0.getValue(), "text/turtle");
 		return false;
 	});
