@@ -10,7 +10,7 @@ function example_structure(exampleid){
 			<button class="buttonsample copyturtletoclipboard" id="` + exampleid + `-tabs-1-button-1">Copy</button>
 			<button class="buttonsample openTurtleInConverter" id="` + exampleid + `-tabs-1-button-2">Open in Converter</button>
 	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
-			<select name="version" id="version">
+			<select name="version" id="version" class="buttonsample chooseVersion">
 				<option>v3.Base0</option>
 				<option selected="selected">v3.Full</option>
     		</select>
@@ -21,7 +21,7 @@ function example_structure(exampleid){
 			<button class="buttonsample openinplayground" id="` + exampleid + `-tabs-2-button-2">Open in Playground</button>
 			<button class="buttonsample openJsonldInConverter" id="` + exampleid + `-tabs-2-button-3">Open in Converter</button>
 	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
-			<select name="version" id="version">
+			<select name="version" id="version" class="buttonsample chooseVersion">
 				<option>v3.Base0</option>
 				<option selected="selected">v3.Full</option>
     		</select>
@@ -119,6 +119,7 @@ var dialog = $("<div>", {
 //}'
 
 function validate(model, version, content, format) {
+	console.log(version);
 	request = {
 	"contentToValidate": btoa(content),
     "contentSyntax": format,
@@ -365,7 +366,8 @@ $(document).ready(function () {
 		var exampleid = $(this).parent().parent().attr("exampleid");
 		var indexValues = $examples.map(function() { return this.id; }) ;
 		var index = myIndexOf(indexValues, exampleid);
-		var shapes = validate("dcat-ap", "v3.Full", editors[index].CM0.getValue(), "text/turtle");
+		var versionSelected = $(this).siblings('.chooseVersion option:selected').text();
+		var shapes = validate("dcat-ap", versionSelected, editors[index].CM0.getValue(), "text/turtle");
 		return false;
 	});
 	$("button.validateJsonld").on('click', function(e) {
