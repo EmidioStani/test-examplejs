@@ -328,8 +328,8 @@ $(document).ready(function () {
 			select_list = example_tab.find('select');
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
-				$.each(version_list, function(index, key) {
-					select_item.append($('<option></option>').val(key).html(key) );
+				version_list.forEach(function (item, index) {
+					select_item.append($('<option></option>').val(item).html(item) );
 				})
 			})
 		}
