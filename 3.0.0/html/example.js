@@ -298,7 +298,7 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
-	var version_list = ['v3.Codelists', 'v3.0Base0', 'v3.0Range0', 'v3.0Base', 'v3.0Range', 'v3.0Rec', 'v3.Full', 'v3.Full1'] ;
+	var version_list = ["v3.Codelists", "v3.0Base0", "v3.0Range0", "v3.0Base", "v3.0Range", "v3.0Rec", "v3.Full", "v3.Full1"] ;
 	var $examples = $(examples_id);
 
 //	$examples.children(examples_class).each(function(index){
@@ -329,7 +329,7 @@ $(document).ready(function () {
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
 				version_list.forEach(function (item, index) {
-					select_item.append($('<option></option>').val(item).html(item) );
+					$(select_item).append($('<option></option>').val(item).html(item) );
 				})
 			})
 		}
