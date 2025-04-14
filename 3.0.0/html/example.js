@@ -445,31 +445,31 @@ $(document).ready(function () {
 	var version_list = [
       {
 		"type": "v3.0Base0",
-		"description": "DCAT-AP 3.0.0 Base Zero (no background knowledge)"
+		"description": "DCAT-AP 3.0.0 Base Zero"
 	  },
 	  {
 		"type": "v3.0Range0",
-		"description": "DCAT-AP 3.0.0 Ranges Zero (no background knowledge)"
+		"description": "DCAT-AP 3.0.0 Ranges Zero"
 	  },
 	  {
 		"type": "v3.0Base",
-		"description": "DCAT-AP 3.0.0 Base (with background knowledge)"
+		"description": "DCAT-AP 3.0.0 Base"
 	  },
 	  {
 		"type": "v3.0Range",
-		"description": "DCAT-AP 3.0.0 Ranges (with background knowledge)"
+		"description": "DCAT-AP 3.0.0 Ranges"
 	  },
 	  {
 		"type": "v3.0Rec",
-		"description": "DCAT-AP 3.0.0  Recommendations (with background knowledge)"
+		"description": "DCAT-AP 3.0.0 Recommendations"
 	  },
 	  {
 		"type": "v3.Full",
-		"description": "DCAT-AP 3.0.0 Full (with background knowledge)"
+		"description": "DCAT-AP 3.0.0 Full"
 	  },
 	  {
 		"type": "v3.Full1",
-		"description": "DCAT-AP 3.0.0 Full (individual constraints)"
+		"description": "DCAT-AP 3.0.0 Full (with constraints)"
 	  }
 	] ;
 	//var version_list = [] ;
