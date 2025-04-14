@@ -283,7 +283,7 @@ function validateShacl(model, rule, content, format) {
    "embeddingMethod": "BASE64",
    "externalRules" : [
 	{
-	   "ruleSet" : "https://emidiostani.github.io/test-examplejs/3.0.0/shacl/dcat-ap-SHACL.ttl",
+	   "ruleSet" : rule,
 	   "ruleSyntax" : "text/turtle",
 	   "embeddingMethod" : "URL"
 	}
@@ -555,9 +555,9 @@ $(document).ready(function () {
 		if(model == "any") {
 			var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 			currentlocation = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
-			full = currentlocation + shaclfilepath ;
+			fullUrl = currentlocation + shaclfilepath ;
 			console.log("full location:" + full) ;
-			validateShacl(model, shaclfilepath, editors[index].CM0.getValue(), "text/turtle");
+			validateShacl(model, fullUrl, editors[index].CM0.getValue(), "text/turtle");
 		}
 		else {
 			var versionSelected = $(this).siblings('.chooseVersion').val();
