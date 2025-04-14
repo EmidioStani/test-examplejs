@@ -328,13 +328,10 @@ $(document).ready(function () {
 			select_list = example_tab.find('select');
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
-				for (version in version_list)
-					select_item.append(
-						$('<option>', { 
-							value: version,
-							text : version 
-						})
-					)
+				for (version in version_list) {
+					option_item = '<option value=' + version + '>' + version + '</option>';
+					select_item.append(option_item);
+				}	
 			})
 		}
 
