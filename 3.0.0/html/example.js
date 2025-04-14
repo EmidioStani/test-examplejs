@@ -440,7 +440,8 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
-	var model = "any" ;
+	var model = "dcat-ap" ;
+	var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 	var version_list = ["v3.0Base0", "v3.0Range0", "v3.0Base", "v3.0Range", "v3.0Rec", "v3.Full", "v3.Full1"] ;
 	//var version_list = [] ;
 	var $examples = $(examples_id);
@@ -553,7 +554,6 @@ $(document).ready(function () {
 		var index = myIndexOf(indexValues, exampleid);
 		
 		if(model == "any") {
-			var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 			currentlocation = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
 			fullUrl = currentlocation + shaclfilepath ;
 			console.log("full location:" + fullUrl) ;
@@ -571,7 +571,6 @@ $(document).ready(function () {
 		var index = myIndexOf(indexValues, exampleid);
 		//var shapes = loadShape(shaclfilepath, editors[index].CM1.getValue(), "application%2Fld%2Bjson");
 		if(model == "any") {
-			var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 			currentlocation = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
 			fullUrl = currentlocation + shaclfilepath ;
 			console.log("full location:" + fullUrl) ;
