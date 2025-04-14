@@ -276,8 +276,7 @@ function validate(model, version, content, format) {
 		});
 }
 
-function validateShacl(model, version, content, format) {
-	console.log(version);
+function validateShacl(model, content, format) {
 	request = {
 	"contentToValidate": btoa(content),
     "contentSyntax": format,
@@ -555,7 +554,7 @@ $(document).ready(function () {
 		
 		if(model == "any") {
 			var shaclfilepath = "./html/shacl/shapes.ttl" ;
-			validateShacl(model, versionSelected, editors[index].CM0.getValue(), "text/turtle");
+			validateShacl(model, editors[index].CM0.getValue(), "text/turtle");
 		}
 		else {
 			var versionSelected = $(this).siblings('.chooseVersion').val();
