@@ -141,6 +141,9 @@ var dialog = $("<div>", {
 
 function validate(model, version, content, format) {
 	console.log(version);
+	if(version === undefined) {
+		console.log("This is undefined");
+	}
 	request = {
 	"contentToValidate": btoa(content),
     "contentSyntax": format,
