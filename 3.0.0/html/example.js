@@ -329,7 +329,7 @@ $(document).ready(function () {
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
 				$.each(version_list, function(index, key) {
-					select_item.append($('<option></option>').val(item).html(item) );
+					select_item.append($('<option></option>').val(key).html(key) );
 				})
 			})
 		}
