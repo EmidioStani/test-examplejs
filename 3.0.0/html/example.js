@@ -440,7 +440,7 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
-	var model = "dcat-ap" ;
+	var model = "any" ;
 	var version_list = ["v3.0Base0", "v3.0Range0", "v3.0Base", "v3.0Range", "v3.0Rec", "v3.Full", "v3.Full1"] ;
 	//var version_list = [] ;
 	var $examples = $(examples_id);
@@ -450,7 +450,7 @@ $(document).ready(function () {
 		exampleid = this.id;
 		examples.push(exampleid); 
 		var text = "" ;
-		if(version_list.length != 0) {
+		if(version_list.length != 0 && model != "any") {
 			console.log(version_list) ;
 			text = example_structure_itb_instance(exampleid);
 		}
@@ -468,7 +468,7 @@ $(document).ready(function () {
 
 		example_tab = $("#" + exampleid + "-tabs") ;
 
-		if(version_list.length != 0) {
+		if(version_list.length != 0 && model != "any") {
 			select_list = example_tab.find('select');
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
