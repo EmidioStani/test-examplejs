@@ -276,6 +276,146 @@ function validate(model, version, content, format) {
 		});
 }
 
+function validateShacl(model, version, content, format) {
+	console.log(version);
+	request = {
+	"contentToValidate": btoa(content),
+    "contentSyntax": format,
+   "embeddingMethod": "BASE64",
+   "externalRules" : [
+	{
+	   "ruleSet" : "https://emidiostani.github.io/test-examplejs/3.0.0/shacl/dcat-ap-SHACL.ttl",
+	   "ruleSyntax" : "text/turtle",
+	   "embeddingMethod" : "URL"
+	}
+	],
+   "reportSyntax": "text/turtle"
+	};
+	var itbapi = "https://www.itb.ec.europa.eu/shacl/" + model + "/api/validate" ;
+	$.ajax({
+		type: "POST",
+		url: itbapi,
+		data: JSON.stringify(request),// now data come in this function
+		contentType: "application/json; charset=utf-8",
+		crossDomain: true,
+		dataType: "text",
+		success: function (response, status, jqXHR) {
+			//dialog.css("white-space","pre-wrap");
+			htmltable="<table id='ValidationResult' class='display' style='width:100%; word-break: break-all; font-size:14px'><thead><tr><th>Node</th><th>Path</th><th>Message</th><th>Severity</th></tr></thead><tbody>";
+
+			const parser = new N3.Parser();
+			const store = new N3.Store();
+
+			// Parse the Turtle into the store
+			parser.parse(response, (error, quad, prefixes) => {
+				if (quad) {
+				store.addQuad(quad);
+				} else {
+				runQuery(); // Done parsing
+				}
+			});
+
+			async function runQuery() {
+				const query = `
+				PREFIX sh: <http://www.w3.org/ns/shacl#>
+				SELECT ?node ?path ?message ?severity
+				WHERE {
+					?result a sh:ValidationResult .
+					?result sh:focusNode ?node .
+					?result sh:resultPath ?path .
+					?result sh:resultMessage ?message .
+					?result sh:resultSeverity ?severity .
+				}
+				`;
+
+				const comunicaEngine = new Comunica.QueryEngine();
+				const result = await comunicaEngine.queryBindings(query, {
+				sources: [store] // Using the N3 store as the RDF source
+				});
+
+				const bindings = await result.toArray();
+
+				bindings.forEach(binding => {
+					triplestring = "<tr><td>" + binding.get('node').value + "</td><td>" + binding.get('path').value + "</td><td>" + binding.get('message').value + "</td><td>" + binding.get('severity').value + "</td></tr>" ;
+					htmltable += triplestring;
+					//console.log("Subject:", binding.get('result').value);
+					//console.log("Predicate:", binding.get('p').value);
+					//console.log("Object:", binding.get('o').value);
+				});
+
+				htmltable += "</tbody></table>"
+
+				reg = /sh:conforms\s+true/g
+				if(response.search(reg) >=0 ) {
+					responseOk = "Congratulations, no errors were found"
+					dialog.html(responseOk);
+					dialog.dialog("open");
+					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "darkgreen", "background-image": "linear-gradient(to bottom,#6a996a,#006400)","color":"white"});
+				} else {
+					dialog.html(htmltable);
+					
+					dialog.dialog("open");
+					$('#ValidationResult').DataTable( {
+						searching: false,
+						layout: {
+							topStart: {
+								buttons: [
+									'copy', 
+									'csv', 
+									'excel',
+									{
+										extend: 'pdfHtml5',
+										orientation: 'landscape'
+									}, 
+									'print',
+									{
+										text: 'Copy Turtle',
+										action: function (e, dt, node, config) {
+											navigator.clipboard.writeText(response);
+										},
+										className: 'copyTurtle'
+									}
+								]
+							}
+						},
+						"createdRow" : function( row, data, dataIndex) {
+							if(data[3] == "http://www.w3.org/ns/shacl#Violation") {
+								$(row).css("background-color", "#f2dede");
+							} else {
+								$(row).css("background-color", "#fcf8e3");
+							}
+						}
+					});
+					dialog.closest(".ui-dialog").children(".ui-dialog-titlebar").css({"background": "red", "background-image": "linear-gradient(to bottom,#ac6464,#b31c1c)","color":"white"});
+				}
+			}
+			
+		},
+
+		error: function (jqXHR, exception) {
+		 // error handler
+		var msg = '';
+		if (jqXHR.status === 0) {
+			msg = 'Not connect.\n Verify Network.';
+		} else if (jqXHR.status == 404) {
+			msg = 'Requested page not found. [404]';
+		} else if (jqXHR.status == 500) {
+			msg = 'Internal Server Error [500].';
+		} else if (exception === 'parsererror') {
+			msg = 'Requested JSON parse failed.';
+		} else if (exception === 'timeout') {
+			msg = 'Time out error.';
+		} else if (exception === 'abort') {
+			msg = 'Ajax request aborted.';
+		} else {
+			msg = 'Uncaught Error.\n';
+		}
+		
+		alert('It was not possible to validate, msg:' + msg + ' error:' + jqXHR.responseText);
+		}
+		});
+}
+
 function createTurtleEditorFrom(selector) {
   return CodeMirror.fromTextArea(selector, {
     mode: "turtle",
@@ -301,6 +441,7 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
+	var model = "dcat-ap" ;
 	//var version_list = ["v3.0Base0", "v3.0Range0", "v3.0Base", "v3.0Range", "v3.0Rec", "v3.Full", "v3.Full1"] ;
 	var version_list = [] ;
 	var $examples = $(examples_id);
@@ -411,8 +552,15 @@ $(document).ready(function () {
 		var exampleid = $(this).parent().parent().attr("exampleid");
 		var indexValues = $examples.map(function() { return this.id; }) ;
 		var index = myIndexOf(indexValues, exampleid);
-		var versionSelected = $(this).siblings('.chooseVersion').val();
-		var shapes = validate("dcat-ap", versionSelected, editors[index].CM0.getValue(), "text/turtle");
+		
+		if(model == "any") {
+			var shaclfilepath = "./html/shacl/shapes.ttl" ;
+			validateShacl(model, versionSelected, editors[index].CM0.getValue(), "text/turtle");
+		}
+		else {
+			var versionSelected = $(this).siblings('.chooseVersion').val();
+			validate(model, versionSelected, editors[index].CM0.getValue(), "text/turtle");
+		}
 		return false;
 	});
 	$("button.validateJsonld").on('click', function(e) {
