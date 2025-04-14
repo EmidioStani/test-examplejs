@@ -556,7 +556,7 @@ $(document).ready(function () {
 			var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 			currentlocation = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
 			fullUrl = currentlocation + shaclfilepath ;
-			console.log("full location:" + full) ;
+			console.log("full location:" + fullUrl) ;
 			validateShacl(model, fullUrl, editors[index].CM0.getValue(), "text/turtle");
 		}
 		else {
