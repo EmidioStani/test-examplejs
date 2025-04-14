@@ -329,7 +329,7 @@ $(document).ready(function () {
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
 				version_list.forEach(function (item, index) {
-					option_item = "<option value=' + item + '>' + item + '</option>";
+					option_item = "<option value=" + item + ">" + item + "</option>";
 					select_item.append(option_item);
 				})
 			})
