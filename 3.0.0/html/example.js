@@ -10,7 +10,7 @@ function example_structure_itb_instance(exampleid){
 			<button class="buttonsample copyturtletoclipboard" id="` + exampleid + `-tabs-1-button-1">Copy</button>
 			<button class="buttonsample openTurtleInConverter" id="` + exampleid + `-tabs-1-button-2">Open in Converter</button>
 	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
-			<select name="version" id="version" class="buttonsample chooseVersion">
+			<select name="version" id="` + exampleid + `-tabs-1-version" class="buttonsample chooseVersion">
     		</select>
 		</div>
 		<div id="` + exampleid + `-tabs-2">
@@ -19,7 +19,7 @@ function example_structure_itb_instance(exampleid){
 			<button class="buttonsample openinplayground" id="` + exampleid + `-tabs-2-button-2">Open in Playground</button>
 			<button class="buttonsample openJsonldInConverter" id="` + exampleid + `-tabs-2-button-3">Open in Converter</button>
 	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
-			<select name="version" id="version" class="buttonsample chooseVersion">
+			<select name="version" id="` + exampleid + `-tabs-2-version" class="buttonsample chooseVersion">
     		</select>
 		</div>
 	</div>`;
@@ -442,7 +442,36 @@ $(document).ready(function () {
 	var folder = "./html/examples/";
 	var model = "dcat-ap" ;
 	var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
-	var version_list = ["v3.0Base0", "v3.0Range0", "v3.0Base", "v3.0Range", "v3.0Rec", "v3.Full", "v3.Full1"] ;
+	var version_list = [
+      {
+		"type": "v3.0Base0",
+		"description": "DCAT-AP 3.0.0 Base Zero (no background knowledge)"
+	  },
+	  {
+		"type": "v3.0Range0",
+		"description": "DCAT-AP 3.0.0 Ranges Zero (no background knowledge)"
+	  },
+	  {
+		"type": "v3.0Base",
+		"description": "DCAT-AP 3.0.0 Base (with background knowledge)"
+	  },
+	  {
+		"type": "v3.0Range",
+		"description": "DCAT-AP 3.0.0 Ranges (with background knowledge)"
+	  },
+	  {
+		"type": "v3.0Rec",
+		"description": "DCAT-AP 3.0.0  Recommendations (with background knowledge)"
+	  },
+	  {
+		"type": "v3.Full",
+		"description": "DCAT-AP 3.0.0 Full (with background knowledge)"
+	  },
+	  {
+		"type": "v3.Full1",
+		"description": "DCAT-AP 3.0.0 Full (individual constraints)"
+	  }
+	] ;
 	//var version_list = [] ;
 	var $examples = $(examples_id);
 
@@ -474,7 +503,7 @@ $(document).ready(function () {
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
 				version_list.forEach(function (item, index) {
-					$(select_item).append($('<option></option>').val(item).html(item) );
+					$(select_item).append($('<option></option>').val(item.type).html(item.description) );
 				})
 			})
 		}
