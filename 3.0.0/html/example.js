@@ -442,7 +442,7 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
-	var model = "any" ;
+	var model = "dcat-ap" ;
 	var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 	var version_list = [
       {
