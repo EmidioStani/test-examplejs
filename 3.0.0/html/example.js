@@ -569,9 +569,18 @@ $(document).ready(function () {
 		var exampleid = $(this).parent().parent().attr("exampleid");
 		var indexValues = $examples.map(function() { return this.id; }) ;
 		var index = myIndexOf(indexValues, exampleid);
-		var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 		//var shapes = loadShape(shaclfilepath, editors[index].CM1.getValue(), "application%2Fld%2Bjson");
-		var shapes = validate("dcat-ap", "v3.Full", editors[index].CM1.getValue(), "application/ld+json");
+		if(model == "any") {
+			var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
+			currentlocation = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
+			fullUrl = currentlocation + shaclfilepath ;
+			console.log("full location:" + fullUrl) ;
+			validateShacl(model, fullUrl, editors[index].CM0.getValue(), "text/turtle");
+		}
+		else {
+			var versionSelected = $(this).siblings('.chooseVersion').val();
+			validate(model, versionSelected,  editors[index].CM1.getValue(), "application/ld+json");
+		}
 		return false;
 	});
 	$("div.CodeMirror pre").on('click', function(e) {
