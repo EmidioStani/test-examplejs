@@ -10,7 +10,7 @@ function example_structure_itb_instance(exampleid){
 			<button class="buttonsample copyturtletoclipboard" id="` + exampleid + `-tabs-1-button-1">Copy</button>
 			<button class="buttonsample openTurtleInConverter" id="` + exampleid + `-tabs-1-button-2">Open in Converter</button>
 	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
-			<select name="version" id="` + exampleid + `-tabs-1-version" class="buttonsample chooseVersion">
+			<select name="version" id="` + exampleid + `-tabs-1-version" class="chooseVersion">
     		</select>
 			<a href="https://github.com/ISAITB/validator-resources-dcat-ap?tab=readme-ov-file#configured-options"><img src="./html/info.jpg" class="infosample"></a>
 		</div>
@@ -20,7 +20,7 @@ function example_structure_itb_instance(exampleid){
 			<button class="buttonsample openinplayground" id="` + exampleid + `-tabs-2-button-2">Open in Playground</button>
 			<button class="buttonsample openJsonldInConverter" id="` + exampleid + `-tabs-2-button-3">Open in Converter</button>
 	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
-			<select name="version" id="` + exampleid + `-tabs-2-version" class="buttonsample chooseVersion">
+			<select name="version" id="` + exampleid + `-tabs-2-version" class="chooseVersion">
     		</select>
 			<a href="https://github.com/ISAITB/validator-resources-dcat-ap?tab=readme-ov-file#configured-options"><img src="./html/info.jpg" class="infosample"></a>
 		</div>
