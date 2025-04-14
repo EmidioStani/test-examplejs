@@ -1,4 +1,4 @@
-function example_structure(exampleid){
+function example_structure_itb_instance(exampleid){
 	structure=`
 	<div id="` + exampleid + `-tabs" exampleid="` + exampleid + `"  class="tabs tabsstyle">
 		<ul>
@@ -11,8 +11,6 @@ function example_structure(exampleid){
 			<button class="buttonsample openTurtleInConverter" id="` + exampleid + `-tabs-1-button-2">Open in Converter</button>
 	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
 			<select name="version" id="version" class="buttonsample chooseVersion">
-				<option>v3.0Base</option>
-				<option selected="selected">v3.Full</option>
     		</select>
 		</div>
 		<div id="` + exampleid + `-tabs-2">
@@ -22,13 +20,36 @@ function example_structure(exampleid){
 			<button class="buttonsample openJsonldInConverter" id="` + exampleid + `-tabs-2-button-3">Open in Converter</button>
 	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
 			<select name="version" id="version" class="buttonsample chooseVersion">
-				<option>v3.0Base</option>
-				<option selected="selected">v3.Full</option>
     		</select>
 		</div>
 	</div>`;
 	return structure;
 }
+
+function example_structure(exampleid){
+	structure=`
+	<div id="` + exampleid + `-tabs" exampleid="` + exampleid + `"  class="tabs tabsstyle">
+		<ul>
+			<li><a href="#` + exampleid + `-tabs-1">Turtle</a></li>
+			<li><a href="#` + exampleid + `-tabs-2">JSON-LD</a></li>
+		</ul>
+		<div id="` + exampleid + `-tabs-1">
+			<textarea class="validationquery" id="` + exampleid + `-tab1validationquery" name="query" cols="80" rows="16"></textarea>
+			<button class="buttonsample copyturtletoclipboard" id="` + exampleid + `-tabs-1-button-1">Copy</button>
+			<button class="buttonsample openTurtleInConverter" id="` + exampleid + `-tabs-1-button-2">Open in Converter</button>
+	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
+		</div>
+		<div id="` + exampleid + `-tabs-2">
+			<textarea class="validationquery" id="` + exampleid + `-tab2validationquery" name="query" cols="80" rows="16"></textarea>
+			<button class="buttonsample copyjsonldtoclipboard" id="` + exampleid + `-tabs-2-button-1">Copy</button>
+			<button class="buttonsample openinplayground" id="` + exampleid + `-tabs-2-button-2">Open in Playground</button>
+			<button class="buttonsample openJsonldInConverter" id="` + exampleid + `-tabs-2-button-3">Open in Converter</button>
+	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
+		</div>
+	</div>`;
+	return structure;
+}
+
 
 //v1.2, v2.0, vTest, vCodelists, v2.0Base, v2.0Rec, v2.0Range, v2.0Base0, v2.0Full, v2.0Range0, v3.Codelists, v3.0Base0, v3.0Range0, v3.0Base, v3.0Range, v3.0Rec, v3.Full, v3.Full1, hvd.0base, hvd.0Range, hvd.UsageNotes, hvd.Full
 /**
@@ -277,13 +298,21 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
+	var versions_list = ['v3.Codelists', 'v3.0Base0', 'v3.0Range0', 'v3.0Base', 'v3.0Range', 'v3.0Rec', 'v3.Full', 'v3.Full1'] ;
 	var $examples = $(examples_id);
 
 //	$examples.children(examples_class).each(function(index){
 	$examples.each(function(index){
 		exampleid = this.id;
 		examples.push(exampleid); 
-		var text = example_structure(exampleid);
+		var text = "" ;
+		if(versions_list.length != 0) {
+			console.log(versions_list) ;
+			text = example_structure_itb_instance(exampleid);
+		}
+		else {
+			text = example_structure_itb_instance(exampleid);
+		}
 		$(this).after(text);
 
 		var obj = {CM0: createTurtleEditorFrom(document.getElementById(exampleid + "-tab1validationquery")), CM1: createJSONLDEditorFrom(document.getElementById(exampleid + "-tab2validationquery"))};
@@ -293,7 +322,24 @@ $(document).ready(function () {
 		//editors[index][0] = createTurtleEditorFrom(document.getElementById(exampleid + "-tab1validationquery"));
 		//editors[index][1] = createJSONLDEditorFrom(document.getElementById(exampleid + "-tab2validationquery"));
 
-		$("#" + exampleid + "-tabs").tabs();
+		example_tab = $("#" + exampleid + "-tabs") ;
+
+		if(list_versions.length != 0) {
+			select_list = example_tab.find('select');
+			console.log("select_list length:" + select_list.length)
+			$.each(versions_list, function(i, version_item) {
+				$.each(select_list, function(i, select_item) {
+					select_item.append(
+						$('<option>', { 
+							value: version_item.text,
+							text : version_item.text 
+						})
+					)
+				})
+			})
+		}
+
+		example_tab.tabs();
 
 		$("#" + exampleid + "-tabs a").on('click', function(e) {
 			$('.CodeMirror').each(function(i, el){
