@@ -12,6 +12,7 @@ function example_structure_itb_instance(exampleid){
 	        <button class="buttonsample validateTurtle" id="` + exampleid + `-tabs-1-button-3">Validate</button>
 			<select name="version" id="` + exampleid + `-tabs-1-version" class="buttonsample chooseVersion">
     		</select>
+			<a href="https://github.com/ISAITB/validator-resources-dcat-ap?tab=readme-ov-file#configured-options"><img src="./html/info.jpg" class="infosample"></a>
 		</div>
 		<div id="` + exampleid + `-tabs-2">
 			<textarea class="validationquery" id="` + exampleid + `-tab2validationquery" name="query" cols="80" rows="16"></textarea>
@@ -21,6 +22,7 @@ function example_structure_itb_instance(exampleid){
 	        <button class="buttonsample validateJsonld" id="` + exampleid + `-tabs-2-button-4">Validate</button>
 			<select name="version" id="` + exampleid + `-tabs-2-version" class="buttonsample chooseVersion">
     		</select>
+			<a href="https://github.com/ISAITB/validator-resources-dcat-ap?tab=readme-ov-file#configured-options"><img src="./html/info.jpg" class="infosample"></a>
 		</div>
 	</div>`;
 	return structure;
