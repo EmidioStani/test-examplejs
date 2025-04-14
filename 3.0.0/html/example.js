@@ -298,7 +298,7 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
-	var versions_list = ['v3.Codelists', 'v3.0Base0', 'v3.0Range0', 'v3.0Base', 'v3.0Range', 'v3.0Rec', 'v3.Full', 'v3.Full1'] ;
+	var version_list = ['v3.Codelists', 'v3.0Base0', 'v3.0Range0', 'v3.0Base', 'v3.0Range', 'v3.0Rec', 'v3.Full', 'v3.Full1'] ;
 	var $examples = $(examples_id);
 
 //	$examples.children(examples_class).each(function(index){
@@ -306,8 +306,8 @@ $(document).ready(function () {
 		exampleid = this.id;
 		examples.push(exampleid); 
 		var text = "" ;
-		if(versions_list.length != 0) {
-			console.log(versions_list) ;
+		if(version_list.length != 0) {
+			console.log(version_list) ;
 			text = example_structure_itb_instance(exampleid);
 		}
 		else {
@@ -324,7 +324,7 @@ $(document).ready(function () {
 
 		example_tab = $("#" + exampleid + "-tabs") ;
 
-		if(versions_list.length != 0) {
+		if(version_list.length != 0) {
 			select_list = example_tab.find('select');
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
