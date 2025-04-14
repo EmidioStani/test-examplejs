@@ -553,8 +553,10 @@ $(document).ready(function () {
 		var index = myIndexOf(indexValues, exampleid);
 		
 		if(model == "any") {
-			var shaclfilepath = "./html/shacl/shapes.ttl" ;
-			console.log("location:" + window.location.href)
+			var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
+			location = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
+			full = location + shaclfilepath ;
+			console.log("full location:" + full) ;
 			validateShacl(model, shaclfilepath, editors[index].CM0.getValue(), "text/turtle");
 		}
 		else {
@@ -567,7 +569,7 @@ $(document).ready(function () {
 		var exampleid = $(this).parent().parent().attr("exampleid");
 		var indexValues = $examples.map(function() { return this.id; }) ;
 		var index = myIndexOf(indexValues, exampleid);
-		var shaclfilepath = "./html/shacl/shapes.ttl" ;
+		var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 		//var shapes = loadShape(shaclfilepath, editors[index].CM1.getValue(), "application%2Fld%2Bjson");
 		var shapes = validate("dcat-ap", "v3.Full", editors[index].CM1.getValue(), "application/ld+json");
 		return false;
