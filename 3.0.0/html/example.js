@@ -331,9 +331,9 @@ $(document).ready(function () {
 				version_list.forEach(function (item, index) {
 					option_item = '<option value=' + item + '>' + item + '</option>';
 					select_item.append(option_item);
-				}	
-			)
-		})
+				})
+			})
+		}
 
 		example_tab.tabs();
 
