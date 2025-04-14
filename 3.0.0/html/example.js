@@ -283,7 +283,7 @@ function validateShacl(model, rule, content, format) {
    "embeddingMethod": "BASE64",
    "externalRules" : [
 	{
-	   "ruleSet" : rule,
+	   "ruleSet" : "https://emidiostani.github.io/test-examplejs/3.0.0/shacl/dcat-ap-SHACL.ttl",
 	   "ruleSyntax" : "text/turtle",
 	   "embeddingMethod" : "URL"
 	}
