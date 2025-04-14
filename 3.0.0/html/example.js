@@ -276,14 +276,14 @@ function validate(model, version, content, format) {
 		});
 }
 
-function validateShacl(model, content, format) {
+function validateShacl(model, rule, content, format) {
 	request = {
 	"contentToValidate": btoa(content),
     "contentSyntax": format,
    "embeddingMethod": "BASE64",
    "externalRules" : [
 	{
-	   "ruleSet" : "https://emidiostani.github.io/test-examplejs/3.0.0/shacl/dcat-ap-SHACL.ttl",
+	   "ruleSet" : rule,
 	   "ruleSyntax" : "text/turtle",
 	   "embeddingMethod" : "URL"
 	}
@@ -554,7 +554,8 @@ $(document).ready(function () {
 		
 		if(model == "any") {
 			var shaclfilepath = "./html/shacl/shapes.ttl" ;
-			validateShacl(model, editors[index].CM0.getValue(), "text/turtle");
+			console.log("location:" + window.location.href)
+			validateShacl(model, shaclfilepath, editors[index].CM0.getValue(), "text/turtle");
 		}
 		else {
 			var versionSelected = $(this).siblings('.chooseVersion').val();
