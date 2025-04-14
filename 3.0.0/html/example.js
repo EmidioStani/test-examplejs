@@ -554,8 +554,8 @@ $(document).ready(function () {
 		
 		if(model == "any") {
 			var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
-			location = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
-			full = location + shaclfilepath ;
+			currentlocation = window.location.protocol + '//' + window.location.hostname + window.location.pathname ;
+			full = currentlocation + shaclfilepath ;
 			console.log("full location:" + full) ;
 			validateShacl(model, shaclfilepath, editors[index].CM0.getValue(), "text/turtle");
 		}
