@@ -328,12 +328,12 @@ $(document).ready(function () {
 			select_list = example_tab.find('select');
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
-				for (version in version_list) {
-					option_item = '<option value=' + version + '>' + version + '</option>';
+				version_list.forEach(function (item, index) {
+					option_item = '<option value=' + item + '>' + item + '</option>';
 					select_item.append(option_item);
 				}	
-			})
-		}
+			)
+		})
 
 		example_tab.tabs();
 
