@@ -442,7 +442,7 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
-	var model = "dcat-ap" ;
+	var model = "zazuko" ;
 	var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 	var version_list = [
       {
@@ -482,12 +482,12 @@ $(document).ready(function () {
 		exampleid = this.id;
 		examples.push(exampleid); 
 		var text = "" ;
-		if(version_list.length != 0 && model != "any") {
+		if(model == "zazuko" || model == "any") {
+			text = example_structure(exampleid);	
+		}
+		else if(version_list.length != 0 ) {
 			console.log(version_list) ;
 			text = example_structure_itb_instance(exampleid);
-		}
-		else {
-			text = example_structure(exampleid);
 		}
 		$(this).after(text);
 
@@ -500,7 +500,7 @@ $(document).ready(function () {
 
 		example_tab = $("#" + exampleid + "-tabs") ;
 
-		if(version_list.length != 0 && model != "any") {
+		if(version_list.length != 0 && (model != "any" && model != "zazuko")) {
 			select_list = example_tab.find('select');
 			console.log("select_list length:" + select_list.length)
 			$.each(select_list, function(i, select_item) {
@@ -590,6 +590,9 @@ $(document).ready(function () {
 			console.log("full location:" + fullUrl) ;
 			validateShacl(model, fullUrl, editors[index].CM0.getValue(), "text/turtle");
 		}
+		else if (model == "zazuko") {
+			loadShape(shaclfilepath, editors[index].CM0.getValue(), "application%2Fld%2Bjson");
+		}
 		else {
 			var versionSelected = $(this).siblings('.chooseVersion').val();
 			validate(model, versionSelected, editors[index].CM0.getValue(), "text/turtle");
@@ -606,6 +609,9 @@ $(document).ready(function () {
 			fullUrl = currentlocation + shaclfilepath ;
 			console.log("full location:" + fullUrl) ;
 			validateShacl(model, fullUrl, editors[index].CM0.getValue(), "text/turtle");
+		}
+		else if (model == "zazuko") {
+			loadShape(shaclfilepath, editors[index].CM1.getValue(), "application%2Fld%2Bjson");
 		}
 		else {
 			var versionSelected = $(this).siblings('.chooseVersion').val();
