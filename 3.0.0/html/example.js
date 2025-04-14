@@ -324,15 +324,15 @@ $(document).ready(function () {
 
 		example_tab = $("#" + exampleid + "-tabs") ;
 
-		if(list_versions.length != 0) {
+		if(versions_list.length != 0) {
 			select_list = example_tab.find('select');
 			console.log("select_list length:" + select_list.length)
-			$.each(versions_list, function(i, version_item) {
-				$.each(select_list, function(i, select_item) {
+			$.each(select_list, function(i, select_item) {
+				$.each(version_list, function(i, version_item) {
 					select_item.append(
 						$('<option>', { 
-							value: version_item.text,
-							text : version_item.text 
+							value: version_item,
+							text : version_item 
 						})
 					)
 				})
