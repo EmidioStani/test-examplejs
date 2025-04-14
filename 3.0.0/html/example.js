@@ -442,7 +442,7 @@ $(document).ready(function () {
         var examples_id = ".examples";
 	var examples_class = ".h3";
 	var folder = "./html/examples/";
-	var model = "zazuko" ;
+	var model = "dcat-ap" ;
 	var shaclfilepath = "shacl/dcat-ap-SHACL.ttl" ;
 	var version_list = [
       {
@@ -591,7 +591,7 @@ $(document).ready(function () {
 			validateShacl(model, fullUrl, editors[index].CM0.getValue(), "text/turtle");
 		}
 		else if (model == "zazuko") {
-			loadShape(shaclfilepath, editors[index].CM0.getValue(), "application%2Fld%2Bjson");
+			loadShape(shaclfilepath, editors[index].CM0.getValue(), "text%2Fturtle");
 		}
 		else {
 			var versionSelected = $(this).siblings('.chooseVersion').val();
